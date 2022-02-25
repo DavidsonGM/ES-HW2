@@ -2,6 +2,9 @@
 class MoviesController < ApplicationController
   def index
     @movies = Movie.all
+    if params[:id] == 'title_header' || params[:id] == 'release_date_header'
+      @movies = @movies.sort_by(&params[:sort_by].to_sym)
+    end
   end
 
   def show
