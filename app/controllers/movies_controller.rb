@@ -6,6 +6,12 @@ class MoviesController < ApplicationController
       @movies = @movies.sort_by(&params[:sort_by].to_sym)
     end
     @class = 'hilite'
+    @ratings = Movie.all_ratings
+    @selected = @ratings unless params[:commit] == 'Filtrar'
+    if params[:commit]
+      @selected = params['ratings'] ? params['ratings'].keys : nil
+      @movies = Movie.where(rating: @selected)
+    end
   end
 
   def show
